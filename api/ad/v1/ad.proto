@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package ad.v1;
+
+option go_package = "ad-api/pkg/ad-api/v1;adV1";
+
+import "google/type/money.proto";
+import "google/protobuf/timestamp.proto";
+
+service AdService {
+  // Список объявлений
+  rpc ListAds(ListAdsRequest) returns(ListAdsResponse);
+}
+
+message ListAdsRequest{}
+
+message ListAdsResponse{
+  repeated Ad ads = 1;
+
+  message Ad {
+    string id = 1;           // Уникальный идентификатор
+    string title = 2;        // Заголовок
+    string description = 3;  // Описание
+    string category = 4;     // Категория
+    string author_id = 5;    // ID автор
+    google.type.Money price = 6; // Цена
+    string status = 7;       // Статус (active, sold, banned)
+    google.protobuf.Timestamp created_at = 8;   // Дата создания (ISO 8601)
+  }
+}
